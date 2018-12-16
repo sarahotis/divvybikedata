@@ -11777,20 +11777,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Biking-through-(the-data)-life(cycle)">Biking through (the data) life(cycle)<a class="anchor-link" href="#Biking-through-(the-data)-life(cycle)">&#182;</a></h1><h4 id="Exploring-bikesharing-trends-from-2015-with-Sarah-Otis">Exploring bikesharing trends from 2015 with Sarah Otis<a class="anchor-link" href="#Exploring-bikesharing-trends-from-2015-with-Sarah-Otis">&#182;</a></h4><p><img src="the_data_lifecycle.png"></p>
 <p>Source: <a href="https://www.cs.umd.edu/class/fall2018/cmsc320/">Cmsc320, Fall 2018 course website</a></p>
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><h4 id="Questions-to-consider-about-bikesharing-data">Questions to consider about bikesharing data<a class="anchor-link" href="#Questions-to-consider-about-bikesharing-data">&#182;</a></h4><ul>
-<li>Do riders go the same distances at different speeds, on average, based on different peak times of the day? </li>
-<li>Does elevation in Chicago affect the direction of travel? Is there a higher demand for and a shortage of bikes at elevated docks, and a lower demand and surplus of bikes at lower elevation docks? (Who are we kidding? This is the flat Midwest.)</li>
-<li>Why so many men in their 30s? What is their race and their occupation? What motivates them over other demographics to choose the Divvybike commute? </li>
-<li>Does weather affect demand for rides? Specifically, can we compare categorical precipitation and weather data to bike demand for any meaningful results?</li>
-<li>Are there less rides during and after bad weather, or just during bad weather? (How tough are Chicagoans?) How fast to bikshare riders return to the streets?</li>
-<li>Are the rides that occur during bad weather shorter, on average?</li>
-<li>(Bonus:) Is there a way to tell how much tourists contribute to the user base? If so, during what seasons, and since there are so many other modes of transportation--subway, Metra, water taxi, Uber, walking, etc.--where do they mostly prefer to ride with their bikes? </li>
-<li>At what times of the day is bike demand the highest; when is bike demand at its lowest?</li>
-<li>Is time of day a good predictor for trip duration?</li>
-<li>How accurate were Divvybike's predictions of station popularity (presumably) when they decided upon dock capacities? Is dock capacity a good predictor for bikeshare activity at each station?</li>
-</ul>
-<p>We will not answer most of these questions. Feel free to explore questions that draw your attention, and please share your results! :)</p>
-<p>Ready? Let's prepare for our journey!</p>
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><p>Ready? Let's prepare for our journey!</p>
 <h2 id="Preparing-for-the-road:-Imports">Preparing for the road: Imports<a class="anchor-link" href="#Preparing-for-the-road:-Imports">&#182;</a></h2><p>Before we get started, we must make sure to import all necessary packages and libraries. Numpy and pandas are our fundamental library. Pandas, numpy, matplotlib, and seaborn all help us with basic data visualization. Sklearn is a robust library of tools to help with regression analysis and machine learning. Missingno will help us visualize missing data, but we first need to install the package (it is not included by default in the language). To mute the output of this install, we write the output to a different location with <code>&gt;/dev/null 2&gt;&amp;1</code>. Regex will help us choose content from columns.</p>
 
 </div>
@@ -12210,7 +12197,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Destination-#2:-Tidy-Data">Destination #2: Tidy Data<a class="anchor-link" href="#Destination-#2:-Tidy-Data">&#182;</a></h2><h4 id="Tidy-the-bikeshare-data-first">Tidy the bikeshare data first<a class="anchor-link" href="#Tidy-the-bikeshare-data-first">&#182;</a></h4><p>As we can see from our Divvybike station data, each station has a unique station id, a coordinate (latitude, longtitude), a dock capacity, and a landmark id all recorded as attributes. The landmark column does not interest us, and we will drop it. It will help us to merge our remaining station data with our main dataframe as well. We will use a full outer join. (Read more on <a href="https://www.shanelynn.ie/merge-join-dataframes-python-pandas-index-1/">how to accomplish this type of join</a>.) Let's do those two tasks now:</p>
+<h2 id="Destination-#2:-Tidy-Data">Destination #2: Tidy Data<a class="anchor-link" href="#Destination-#2:-Tidy-Data">&#182;</a></h2><h4 id="Combine-divvybike-datasets">Combine divvybike datasets<a class="anchor-link" href="#Combine-divvybike-datasets">&#182;</a></h4><p>As we can see from our Divvybike station data, each station has a unique station id, a coordinate (latitude, longtitude), a dock capacity, and a landmark id all recorded as attributes. The landmark column does not interest us, and we will drop it. Let us merge our (remaining) station data with our main bikeshare dataframe. We will use a full outer join. (Read more on <a href="https://www.shanelynn.ie/merge-join-dataframes-python-pandas-index-1/">how to accomplish this type of join</a>.) Let's do those two tasks now:</p>
 
 </div>
 </div>
@@ -12458,7 +12445,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea ">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f617283cb70&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f629f797b70&gt;</pre>
 </div>
 
 </div>
@@ -12532,11 +12519,82 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Since the gender and birthyear atrributes are giving us the most trouble, and there is no data on race, user income, or lifestyle, we may not gain much from analyzing this data. If we need to do analysis later, we can impute. Also, according to the <a href="https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?src=CF">US Census Bureau</a>, approximately 1.4% of the population each year since 2015 has been 85 or older. We can safely discount all the users whose birthyear is before 1925 without significantly affecting our stats about birthyears. We will see what our exploratory data analysis helps us discover; my expectations are low. Let's count</p>
-<p>by eliminating any points that were above (Mean + 2<em>SD) and any points below (Mean - 2</em>SD) before plotting the frequencies.</p>
+<h4 id="Eliminate-outliers-in-user-data">Eliminate outliers in user data<a class="anchor-link" href="#Eliminate-outliers-in-user-data">&#182;</a></h4><p>The gender and birthyear atrributes are giving us the most trouble, and Divvybike offers no race, income, or lifestyle data. Still, if gender and birthyear enter our analysis later, we will thank ourselves for having tidied the data now.</p>
+<p>According to the <a href="https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?src=CF">US Census Bureau</a>, approximately 1.4% of the population each year since 2015 has been 85 or older. We can safely discount all these ages without significantly affecting our birthyear statistics for bikeshare riders. More statistically speaking, we can discount all ages that are beyond the "99.7%" of data that the 3-sigma rule describes. Below, we set <a href="https://www.kdnuggets.com/2017/02/removing-outliers-standard-deviation-python.html">outliers</a> of our lower bound, which are below <code>mean - 3*SD</code>, to null.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">eliminate_outliers</span><span class="p">(</span><span class="n">series</span><span class="p">):</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">series</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="c1">#     upper_bound = series.mean()+2*series.std()</span>
+
+    <span class="k">return</span> <span class="p">[(</span><span class="n">val</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;=</span> <span class="n">lower_bound</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">series</span><span class="p">]</span>
+<span class="c1">#     return [(val if (val &lt;= upper_bound and val &gt;= lower_bound) else None) for val in series]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">eliminate_outliers</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>count    177858.000000
+mean       1977.813745
+std          10.724572
+min        1900.000000
+25%        1971.000000
+50%        1981.000000
+75%        1986.000000
+max        1998.000000
+Name: birthyear, dtype: float64</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>count    177384.000000
+mean       1977.917941
+std          10.527771
+min        1946.000000
+25%        1971.000000
+50%        1981.000000
+75%        1986.000000
+max        1998.000000
+Name: birthyear, dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12549,7 +12607,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">DATETIME_MINUTES_INDEX</span> <span class="o">=</span> <span class="mi">14</span>
@@ -12585,10 +12643,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Check for missing values.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Checks for missing values.</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="n">display</span><span class="p">(</span><span class="n">weather2015</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
 </pre></div>
@@ -12646,7 +12704,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Adding weather classification for safety (categorical) and risk  #</span>
@@ -12702,7 +12760,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Assigning numerical vals to gender for mean, and imputing</span>
@@ -12715,7 +12773,8 @@ memory usage: 67.5+ KB
     <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;Male&#39;</span><span class="p">)</span>
 
 <span class="c1"># Imputing for birthyears</span>
-<span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
+                                                                        <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
 <span class="c1"># Confirming that data from weather2015 has properly merged and gender/birthyear were properly imputed</span>
 <span class="n">display</span><span class="p">(</span><span class="n">msno</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">))</span>
@@ -12737,7 +12796,7 @@ memory usage: 67.5+ KB
 
 
 <div class="output_text output_subarea ">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f6172767c50&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f629f6c5e48&gt;</pre>
 </div>
 
 </div>
@@ -12783,7 +12842,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
@@ -12854,7 +12913,7 @@ memory usage: 67.5+ KB
     <tr>
       <th>mean</th>
       <td>785.447667</td>
-      <td>1977.813745</td>
+      <td>1977.917941</td>
       <td>21.401119</td>
       <td>21.408161</td>
       <td>0.149410</td>
@@ -12863,7 +12922,7 @@ memory usage: 67.5+ KB
     <tr>
       <th>std</th>
       <td>2068.399468</td>
-      <td>10.054628</td>
+      <td>9.856960</td>
       <td>7.187096</td>
       <td>7.222092</td>
       <td>0.327597</td>
@@ -12872,7 +12931,7 @@ memory usage: 67.5+ KB
     <tr>
       <th>min</th>
       <td>60.000000</td>
-      <td>1900.000000</td>
+      <td>1946.000000</td>
       <td>11.000000</td>
       <td>11.000000</td>
       <td>0.000000</td>
@@ -12989,7 +13048,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">weekday_id</span> <span class="o">=</span> <span class="p">[]</span>
@@ -13000,18 +13059,15 @@ memory usage: 67.5+ KB
     
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">)):</span>
     <span class="n">dtime</span> <span class="o">=</span> <span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;starttime&#39;</span><span class="p">]</span>
-    <span class="n">prog</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^2015&#39;</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">prog</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dtime</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-        <span class="n">time_attrs</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">dtime</span><span class="p">,</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span> <span class="c1"># Dates are recorded in multiple formats</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">time_attrs</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">dtime</span><span class="p">,</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M&#39;</span><span class="p">)</span>
+    <span class="n">dtime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">dtime</span><span class="p">,</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    
     <span class="n">weekdays</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sunday&#39;</span><span class="p">,</span><span class="s1">&#39;monday&#39;</span><span class="p">,</span><span class="s1">&#39;tuesday&#39;</span><span class="p">,</span><span class="s1">&#39;wednesday&#39;</span><span class="p">,</span><span class="s1">&#39;thursday&#39;</span><span class="p">,</span><span class="s1">&#39;friday&#39;</span><span class="p">,</span><span class="s1">&#39;saturday&#39;</span><span class="p">]</span>
-    <span class="n">wkdy_id</span> <span class="o">=</span> <span class="p">(</span><span class="n">time_attrs</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span><span class="o">.</span><span class="n">tm_wday</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">7</span>
+    <span class="n">wkdy_id</span> <span class="o">=</span> <span class="p">(</span><span class="n">dtime</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span><span class="o">.</span><span class="n">tm_wday</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">7</span>
+    
     <span class="n">weekday_id</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wkdy_id</span><span class="p">)</span>
     <span class="n">weekday</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weekdays</span><span class="p">[</span><span class="n">wkdy_id</span><span class="p">])</span> <span class="c1"># 0 is Monday in documentation, so 1 is Sunday now</span>
-    <span class="n">week</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time_attrs</span><span class="o">.</span><span class="n">isocalendar</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">hour</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time_attrs</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span><span class="o">.</span><span class="n">tm_hour</span><span class="p">)</span>
+    <span class="n">week</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dtime</span><span class="o">.</span><span class="n">isocalendar</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">hour</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dtime</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span><span class="o">.</span><span class="n">tm_hour</span><span class="p">)</span>
     <span class="n">workweek</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;y&#39;</span> <span class="k">if</span> <span class="p">(</span><span class="n">wkdy_id</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">wkdy_id</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;n&#39;</span><span class="p">)</span>
 
 <span class="c1"># Add all the temp data from datetime format to main dataset through full join</span>
@@ -13028,7 +13084,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -13074,7 +13130,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -13133,7 +13189,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># See notes on weather classification, below</span>
@@ -13161,7 +13217,7 @@ memory usage: 67.5+ KB
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[16]:</div>
+<div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -13242,7 +13298,7 @@ memory usage: 67.5+ KB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Pie chart for weather safety!</span>
@@ -13336,6 +13392,27 @@ memory usage: 67.5+ KB
 
 <pre><code>             Before now, the paths after the fork in the road seemed more difficult to choose 
              between. Data can help us make insight and policy decisions. Image source: Alicia Tatone</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><h4 id="Questions-to-consider-about-bikesharing-data">Questions to consider about bikesharing data<a class="anchor-link" href="#Questions-to-consider-about-bikesharing-data">&#182;</a></h4><ul>
+<li>Do riders go the same distances at different speeds, on average, based on different peak times of the day? </li>
+<li>Does elevation in Chicago affect the direction of travel? Is there a higher demand for and a shortage of bikes at elevated docks, and a lower demand and surplus of bikes at lower elevation docks? (Who are we kidding? This is the flat Midwest.)</li>
+<li>Why so many men in their 30s? What is their race and their occupation? What motivates them over other demographics to choose the Divvybike commute? </li>
+<li>Does weather affect demand for rides? Specifically, can we compare categorical precipitation and weather data to bike demand for any meaningful results?</li>
+<li>Are there less rides during and after bad weather, or just during bad weather? (How tough are Chicagoans?) How fast to bikshare riders return to the streets?</li>
+<li>Are the rides that occur during bad weather shorter, on average?</li>
+<li>(Bonus:) Is there a way to tell how much tourists contribute to the user base? If so, during what seasons, and since there are so many other modes of transportation--subway, Metra, water taxi, Uber, walking, etc.--where do they mostly prefer to ride with their bikes? </li>
+<li>At what times of the day is bike demand the highest; when is bike demand at its lowest?</li>
+<li>Is time of day a good predictor for trip duration?</li>
+<li>How accurate were Divvybike's predictions of station popularity (presumably) when they decided upon dock capacities? Is dock capacity a good predictor for bikeshare activity at each station?</li>
+</ul>
+<p>Feel free to explore questions that draw your attention, and please share your results! :)</p>
 
 </div>
 </div>
