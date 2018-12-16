@@ -12600,7 +12600,7 @@ Name: birthyear, dtype: float64</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Standardizing-datetime-columns">Standardizing datetime columns<a class="anchor-link" href="#Standardizing-datetime-columns">&#182;</a></h4><p>One more thing before we begin to explore. We are aggregating lots of trip data and combining multiple datasets, so units should reflect standard formatting. People like to be creative with datetime formats, so let us write a method to standardize datetime to <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 extended formats</a> for any column. We will standardize the <code>chicago_bikeshare_data</code> immediately. We will also add in an hourly datetime column for convenience merging hourly weather data.</p>
+<h4 id="Standardizing-datetime-columns">Standardizing datetime columns<a class="anchor-link" href="#Standardizing-datetime-columns">&#182;</a></h4><p>We are aggregating lots of trip data and combining multiple datasets, so units should reflect standard formatting. People like to be creative with datetime formats, so let us write a method to standardize datetime to <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 extended formats</a> for any column. We will standardize the <code>chicago_bikeshare_data</code> immediately. We will also add in an hourly datetime column for convenience merging hourly weather data.</p>
 
 </div>
 </div>
@@ -12753,7 +12753,8 @@ memory usage: 67.5+ KB
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Mean-imputation-on-missing-bikeshare-data">Mean imputation on missing bikeshare data<a class="anchor-link" href="#Mean-imputation-on-missing-bikeshare-data">&#182;</a></h4><p>In order to fill in missing data, we will perform mean imputation by replacing null values with the mean value of each column. Below, we mean impute data and confirm that all columns are complete after the tidying we have done.</p>
+<h4 id="Mean-imputation-on-missing-bikeshare-data">Mean imputation on missing bikeshare data<a class="anchor-link" href="#Mean-imputation-on-missing-bikeshare-data">&#182;</a></h4><p>One more thing before we begin to explore.</p>
+<p>In order to fill in missing data, we will perform mean imputation by replacing null values with the mean value of each column. Below, we mean impute data and confirm that all columns are complete after the tidying we have done.</p>
 
 </div>
 </div>
@@ -12769,12 +12770,12 @@ memory usage: 67.5+ KB
 <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;gender_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">gender</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">temp</span><span class="o">.</span><span class="n">gender</span><span class="p">]</span> <span class="c1">#assign numerical values to gender for describe()</span>
 <span class="k">if</span> <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;gender_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">&lt;</span> <span class="o">.</span><span class="mi">5</span> <span class="ow">and</span> <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;gender_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
     <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;Male&#39;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span> 
+<span class="k">else</span><span class="p">:</span> <span class="c1"># this can be improved in the future</span>
     <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;Male&#39;</span><span class="p">)</span>
 
 <span class="c1"># Imputing for birthyears</span>
 <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
-                                                                        <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+                                                                      <span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
 <span class="c1"># Confirming that data from weather2015 has properly merged and gender/birthyear were properly imputed</span>
 <span class="n">display</span><span class="p">(</span><span class="n">msno</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">))</span>
@@ -12834,15 +12835,15 @@ memory usage: 67.5+ KB
 <pre><code>                                       The Exploratorium, San Francisco
 
 </code></pre>
-<h4 id="Basic-information">Basic information<a class="anchor-link" href="#Basic-information">&#182;</a></h4><p>Until now, we've been biking along a pretty straight path. Now is we take some detours to explore and find which street we'd like to take next with our data! We want to arrive at a meaningful destination, so we try to gain as much as possible from our data before pedaling more.</p>
-<p><code>chicago_bikeshare_data.describe()</code> tells us some basic stats on our dataset. We drop most categorical numbers for this. We add boolean numbers to gender to study the gender ratio.</p>
-
+<h4 id="Basic-information">Basic information<a class="anchor-link" href="#Basic-information">&#182;</a></h4><p>Until now, we've been biking along a pretty straight path. Now is we take some detours to explore and find which street we'd like to take next with our data! We want to arrive at a meaningful destination, so we try to gain as much as possible from our data before pedaling more. Let us explore basic information about our data.</p>
+<p><code>dataframe.describe()</code> tells us some basic stats on our dataset. We drop most categorical numbers for this. We add boolean numbers or numerical indexes for categorical variables to study their ratios.</p>
+<h4 id="The-bikeshare-dataset">The bikeshare dataset<a class="anchor-link" href="#The-bikeshare-dataset">&#182;</a></h4>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
@@ -12853,10 +12854,10 @@ memory usage: 67.5+ KB
 <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;gender_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">gender</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">temp</span><span class="o">.</span><span class="n">gender</span><span class="p">]</span> <span class="c1">#assign numerical values to gender for describe()</span>
 <span class="n">display</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;from_station_id&#39;</span><span class="p">,</span> <span class="s1">&#39;to_station_id&#39;</span><span class="p">,</span><span class="s1">&#39;trip_id&#39;</span><span class="p">,</span> <span class="s1">&#39;bikeid&#39;</span><span class="p">,</span> <span class="s1">&#39;from_latitude&#39;</span><span class="p">,</span>
                                        <span class="s1">&#39;from_longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;to_latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;to_longitude&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">display</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
-<span class="n">display</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;from_dpcapacity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
-<span class="n">display</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;to_dpcapacity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
-<span class="n">display</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;tripduration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median user birthyear: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median dock capacity per trip origin: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;from_dpcapacity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median dock capacity per trip destination: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;to_dpcapacity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median trip duration: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;tripduration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">/</span><span class="mi">60</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; minutes&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12897,81 +12898,108 @@ memory usage: 67.5+ KB
       <th>from_dpcapacity</th>
       <th>to_dpcapacity</th>
       <th>risk_index</th>
+      <th>week</th>
+      <th>weekday_id</th>
+      <th>hour</th>
       <th>gender_id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>202349.000000</td>
-      <td>202349.000000</td>
-      <td>202349.000000</td>
-      <td>202349.000000</td>
-      <td>202349.000000</td>
-      <td>202349.000000</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
+      <td>1.092701e+06</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>785.447667</td>
-      <td>1977.917941</td>
-      <td>21.401119</td>
-      <td>21.408161</td>
-      <td>0.149410</td>
-      <td>0.163999</td>
+      <td>8.450054e+02</td>
+      <td>1.977896e+03</td>
+      <td>2.181846e+01</td>
+      <td>2.168827e+01</td>
+      <td>1.216591e-01</td>
+      <td>9.436916e+00</td>
+      <td>3.044887e+00</td>
+      <td>1.382297e+01</td>
+      <td>1.673248e-01</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>2068.399468</td>
-      <td>9.856960</td>
-      <td>7.187096</td>
-      <td>7.222092</td>
-      <td>0.327597</td>
-      <td>0.370275</td>
+      <td>2.010731e+03</td>
+      <td>9.513082e+00</td>
+      <td>7.390583e+00</td>
+      <td>7.424369e+00</td>
+      <td>3.045535e-01</td>
+      <td>3.450487e+00</td>
+      <td>1.858799e+00</td>
+      <td>4.260185e+00</td>
+      <td>3.732658e-01</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>60.000000</td>
-      <td>1946.000000</td>
-      <td>11.000000</td>
-      <td>11.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>6.000000e+01</td>
+      <td>1.946000e+03</td>
+      <td>1.100000e+01</td>
+      <td>1.100000e+01</td>
+      <td>0.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>334.000000</td>
-      <td>1973.000000</td>
-      <td>15.000000</td>
-      <td>15.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>3.590000e+02</td>
+      <td>1.973000e+03</td>
+      <td>1.500000e+01</td>
+      <td>1.500000e+01</td>
+      <td>0.000000e+00</td>
+      <td>7.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>9.000000e+00</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>542.000000</td>
-      <td>1979.000000</td>
-      <td>19.000000</td>
-      <td>19.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>5.900000e+02</td>
+      <td>1.978000e+03</td>
+      <td>1.900000e+01</td>
+      <td>1.900000e+01</td>
+      <td>0.000000e+00</td>
+      <td>1.100000e+01</td>
+      <td>3.000000e+00</td>
+      <td>1.600000e+01</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>890.000000</td>
-      <td>1986.000000</td>
-      <td>27.000000</td>
-      <td>27.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>9.800000e+02</td>
+      <td>1.985000e+03</td>
+      <td>2.700000e+01</td>
+      <td>2.700000e+01</td>
+      <td>0.000000e+00</td>
+      <td>1.200000e+01</td>
+      <td>5.000000e+00</td>
+      <td>1.700000e+01</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>85766.000000</td>
-      <td>1998.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
+      <td>8.576600e+04</td>
+      <td>1.998000e+03</td>
+      <td>4.300000e+01</td>
+      <td>4.300000e+01</td>
+      <td>1.000000e+00</td>
+      <td>1.400000e+01</td>
+      <td>6.000000e+00</td>
+      <td>2.300000e+01</td>
+      <td>1.000000e+00</td>
     </tr>
   </tbody>
 </table>
@@ -12985,51 +13013,13 @@ memory usage: 67.5+ KB
 <div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea ">
-<pre>1979.0</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Median user birthyear: 1978.0
+Median dock capacity per trip origin: 19.0
+Median dock capacity per trip destination: 19.0
+Median trip duration: 9.83333333333 minutes
+</pre>
 </div>
-
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>19.0</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>19.0</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>542.0</pre>
-</div>
-
 </div>
 
 </div>
@@ -13040,8 +13030,8 @@ memory usage: 67.5+ KB
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The mean gender_id is .25, meaning that women made up only 25% of riders in 2015, two years after the bikeshare's launch. 1979 is the mean birthyear and 1983 is the median, so most riders are in their 30s. Since the median dpcapacitys are the same for start and destination, we know that there are probably not stations that are more popular to end up at, or that the bikes are returned to their stations somehow; the means are also ~equivalent. Trip durations usually last around 12 minutes (tripduration data is in seconds).</p>
-<h4 id="Extracting-time-information-from-starttime-and-appending-to-dataset">Extracting time information from starttime and appending to dataset<a class="anchor-link" href="#Extracting-time-information-from-starttime-and-appending-to-dataset">&#182;</a></h4><p>This will make trends more clear, as patterns will likely differ on the weekends.</p>
+<p>The mean gender_id is .25, meaning that women made up only 25% of riders in 2015, two years after the bikeshare's launch. 1979 is the mean birthyear and 1983 is the median, so most riders are in their 30s. Since the median dpcapacitys are the same for start and destination, we know that there are probably not stations that are more popular to end up at, or that the bikes are returned to their stations somehow; the means are also ~equivalent. Trip durations are relatively short (tripduration data is in seconds).</p>
+<h4 id="Extracting-time-information-from-starttime-and-appending-to-dataset-for-analysis">Extracting time information from starttime and appending to dataset for analysis<a class="anchor-link" href="#Extracting-time-information-from-starttime-and-appending-to-dataset-for-analysis">&#182;</a></h4><p>This will make trends more clear, as patterns will likely differ on the weekends.</p>
 
 </div>
 </div>
@@ -13182,7 +13172,7 @@ memory usage: 67.5+ KB
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As we can see, there is a clear demand for bikes during the day on the weekends, and during peak commuting hours during the workweek. What if we also add weather into the picture? Then what can we say about how our data is affected?</p>
-<p>Let's take a look at weather trends. Now that we have that dataframe, we will visualize the frequency of safe, mediocre, and dangerous weather in a pie chart. This will help us begin to explore our data.</p>
+<h4 id="Weather-data">Weather data<a class="anchor-link" href="#Weather-data">&#182;</a></h4><p>Let's take a look at weather trends. Now that we have that dataframe, we will visualize the frequency of safe, mediocre, and dangerous weather in a pie chart. This will help us begin to explore our data.</p>
 
 </div>
 </div>
@@ -13400,21 +13390,23 @@ memory usage: 67.5+ KB
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>As you can see from the opening image of this tutorial, the data lifecycle involves a constant feedback loop. During the creation of this tutorial, I continuously re-evaluated the data I used, tidied data, explored different ideas with the data, and collected more data. Still, I try my best to distill the tutorial into five distinct parts. Anyone who applies the concepts of this tutorial to another dataset will learn that the feedback loops are inevitable. The back-and-forth of the data lifecycle makes data science feel like a good book. Where will the data take us next? What will we discover?</p>
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>Thank you for reading this tutorial. I hope you have learned something. If you have questions, please contact me!</p>
+<p>As you can see from the opening image of this tutorial, the data lifecycle involves a constant feedback loop. During the creation of this tutorial, I continuously re-evaluated the data I used, tidied data, explored different ideas with the data, and collected more data. Still, I try my best to distill the tutorial into five distinct parts. Anyone who applies the concepts of this tutorial to another dataset will learn that the feedback loops are inevitable. The back-and-forth of the data lifecycle makes data science feel like a good book. Where will the data take us next? What will we discover?</p>
 <h4 id="Questions-to-consider-about-bikesharing-data">Questions to consider about bikesharing data<a class="anchor-link" href="#Questions-to-consider-about-bikesharing-data">&#182;</a></h4><ul>
 <li>Do riders go the same distances at different speeds, on average, based on different peak times of the day? </li>
 <li>Does elevation in Chicago affect the direction of travel? Is there a higher demand for and a shortage of bikes at elevated docks, and a lower demand and surplus of bikes at lower elevation docks? (Who are we kidding? This is the flat Midwest.)</li>
 <li>Why so many men in their 30s? What is their race and their occupation? What motivates them over other demographics to choose the Divvybike commute? </li>
 <li>Does weather affect demand for rides? Specifically, can we compare categorical precipitation and weather data to bike demand for any meaningful results?</li>
-<li>Are there less rides during and after bad weather, or just during bad weather? (How tough are Chicagoans?) How fast to bikshare riders return to the streets?</li>
+<li>Are there less rides during and after bad weather, or just during bad weather? (How tough are Chicagoans?) How fast do bikeshare riders return to the streets?</li>
+<li>What kinds of inventory analysis can be done on this dataset? What insight and policy decisions might come of that?</li>
 <li>Are the rides that occur during bad weather shorter, on average?</li>
 <li>(Bonus:) Is there a way to tell how much tourists contribute to the user base? If so, during what seasons, and since there are so many other modes of transportation--subway, Metra, water taxi, Uber, walking, etc.--where do they mostly prefer to ride with their bikes? </li>
 <li>At what times of the day is bike demand the highest; when is bike demand at its lowest?</li>
 <li>Is time of day a good predictor for trip duration?</li>
 <li>How accurate were Divvybike's predictions of station popularity (presumably) when they decided upon dock capacities? Is dock capacity a good predictor for bikeshare activity at each station?</li>
 </ul>
-<p>Feel free to explore questions that draw your attention, and please share your results! :)</p>
-
+<p>Feel free to explore questions that draw your attention, and please share your results!</p>
+<h2 id="Happy-exploring-&#128522;">Happy exploring &#128522;<a class="anchor-link" href="#Happy-exploring-&#128522;">&#182;</a></h2>
 </div>
 </div>
 </div>
