@@ -12415,7 +12415,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we can see, the full outer join has maintained the full length of the dataset, meaning that no data was lost in the join! We can continue to prune data now. It seems like there may be missing points in the <code>chicago_bikeshare_data</code> dataframe. Let us check for missing values in the weather and bikesharing data (for three months) by leveraging the missingno package's beautiful "missing data" visualization.</p>
+<p>As we can see, the full outer join has maintained the full length of the dataset, meaning that no data was lost in the join! We can continue to prune data now. It seems like there may be missing points in the <code>chicago_bikeshare_data</code> dataframe. Let us check for missing values in the weather and bikesharing data (for three months) by leveraging the missingno package's beautiful "missing data" visualization. (We could also use <code>.info()</code> for the whole dataframe, if we'd like.)</p>
 
 </div>
 </div>
@@ -12445,7 +12445,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea ">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f6d31b60c18&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f08c1e92b70&gt;</pre>
 </div>
 
 </div>
@@ -12469,24 +12469,21 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let us investigate which type of user data causes more missing data (we could also use <code>.info()</code> for the whole dataframe, if we'd like):</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># What causes this major dip in quantity?</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span><span class="s1">&#39;birthyear&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># Gender and birthyear, which more?</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;birthyear&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># Birthyear takes the cake for &quot;Most MIA&quot;.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Total missing cols: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">)</span> <span class="o">-</span> <span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Cols missing gender: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">)</span> 
+                                     <span class="o">-</span> <span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Cols missing birthyear: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chicago_bikeshare_data</span><span class="p">)</span> 
+                                    <span class="o">-</span> <span class="n">chicago_bikeshare_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span> <span class="p">()</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Rows with missing data from customers: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">((</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()])[</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span>
+    <span class="s1">&#39;usertype&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Customer&#39;</span><span class="p">])))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Rows with missing data from subscribers: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">((</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span><span class="s1">&#39;birthyear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()])[</span><span class="n">chicago_bikeshare_data</span><span class="p">[</span>
+    <span class="s1">&#39;usertype&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Subscriber&#39;</span><span class="p">])))</span>
 </pre></div>
 
 </div>
@@ -12503,10 +12500,12 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(177858, 18)
-(202349, 16)
-(177858, 17)
-(177858, 17)
+<pre>Total missing cols: 24491
+Cols missing gender: 24491
+Cols missing birthyear: 24491
+
+Rows with missing data from customers: 24491
+Rows with missing data from subscribers: 0
 </pre>
 </div>
 </div>
@@ -12514,6 +12513,15 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>All customer (casual or one-time user) data is missing gender and birthyear. This only means that Divvybike does not require actual registration for one-time users, and subscribers (Divvybike members) must provide this information upon registration; this data is missing not at random (MNAR). Since this is a significant portion of our dataset, we will revisit the missing data later on.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12797,7 +12805,7 @@ memory usage: 67.5+ KB
 
 
 <div class="output_text output_subarea ">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f6d31c0cdd8&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f08c1db7e10&gt;</pre>
 </div>
 
 </div>
