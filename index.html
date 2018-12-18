@@ -11777,7 +11777,9 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Biking-through-(the-data)-life(cycle)">Biking through (the data) life(cycle)<a class="anchor-link" href="#Biking-through-(the-data)-life(cycle)">&#182;</a></h1><h4 id="Exploring-bikesharing-trends-from-2015-with-Sarah-Otis">Exploring bikesharing trends from 2015 with Sarah Otis<a class="anchor-link" href="#Exploring-bikesharing-trends-from-2015-with-Sarah-Otis">&#182;</a></h4><p><img src="the_data_lifecycle.png"></p>
 <p>Source: <a href="https://www.cs.umd.edu/class/fall2018/cmsc320/">Cmsc320, Fall 2018 course website</a></p>
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><p>Ready? Let's prepare for our journey!</p>
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><p>If you liked biking, which would you rather: a bike of your own, or a bikeshare membership? A bike, which requires maintenance and protection from theft or rust, gives you the freedom to go for long rides, park wherever you like, and leave the city for some scenic trails. But, it's not easily transportable to other cities, and you may not be able to afford to buy a lasting bike or have space for one. What would push you to join a bikeshare program? If nothing would, would you still use bikeshares as a way to get around once or twice a year for $3?</p>
+<p>In 2015, Chicago's bikeshare program Divvy, began serving the largest area in North America. They updated their pricing plans, too, and began to advertise to low-income riders. By 2015, Divvybikes were only two years old. Divvy has released its trip data from 2013 through today, and we are invited to find out more about the history of this bikeshare program. What can we learn from Divvy's 2015 data?</p>
+<p>Ready? Let's prepare for our journey!</p>
 <h2 id="Preparing-for-the-road:-Imports">Preparing for the road: Imports<a class="anchor-link" href="#Preparing-for-the-road:-Imports">&#182;</a></h2><p>Before we get started, we must make sure to import all necessary packages and libraries. Numpy and pandas are our fundamental library. Pandas, numpy, matplotlib, and seaborn all help us with basic data visualization. Sklearn is a robust library of tools to help with regression analysis and machine learning. Missingno will help us visualize missing data, but we first need to install the package (it is not included by default in the language). To mute the output of this install, we write the output to a different location with <code>&gt;/dev/null 2&gt;&amp;1</code>. Regex will help us choose content from columns.</p>
 
 </div>
@@ -12445,7 +12447,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea ">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f08c1e92b70&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7ff46dc1cba8&gt;</pre>
 </div>
 
 </div>
@@ -12805,7 +12807,7 @@ memory usage: 67.5+ KB
 
 
 <div class="output_text output_subarea ">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f08c1db7e10&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7ff46dc09208&gt;</pre>
 </div>
 
 </div>
@@ -12838,14 +12840,26 @@ memory usage: 67.5+ KB
 
 
 </code></pre>
-<h2 id="Destination-#3:-Exploratory-Data-Analysis">Destination #3: Exploratory Data Analysis<a class="anchor-link" href="#Destination-#3:-Exploratory-Data-Analysis">&#182;</a></h2><p><img src="exploratorium.jpg"></p>
+<h2 id="Destination-#3:-Exploratory-Data-Analysis">Destination #3: Exploratory Data Analysis<a class="anchor-link" href="#Destination-#3:-Exploratory-Data-Analysis">&#182;</a></h2><p>Until now, we've been on a straight path. Collect the data, tidy the data, and now... do something with the data? Let us take some detours to explore which street we'd like to take next with our data! We want to arrive at a meaningful destination, so we try to gain as much as possible from our data before pedaling more through our data lifecycle. Let us explore basic information about our data.</p>
+<p>We can ask so many questions about our data. What can we learn about its inventory, about popular trip times, about users, about geolocations? For now, let us stick to one theme: distance.</p>
+<p>Distance in our dataset may be studied from a variety of perspectives:</p>
+<ol>
+<li>How far, on average, do people travel each day?</li>
+<li>Do distances peak at different times of the day? Can we predict any trends about distance based on time of day?</li>
+<li>Do people of different ages travel different distances?</li>
+<li>Do a higher percentage of subscribers or customers travel longer distances?</li>
+<li>How does weather affect distance? If weather affects distance, does this vary by time of day, usertype, or season?</li>
+<li>Is there any way we can track bikes to see whether bikes that are used a certain number of times begin to be used less? Or, for shorter distances? Or, during bad weather they are used for shorter distances?</li>
+<li>Are there certain locations from which riders take longer trips? Tangentially, can we learn anything about popular places in Chicago based on this distance data?</li>
+</ol>
+<p>We will attempt to answer some of these questions together. We will first look at certain surface-level aspects of our dataset. We will then dive into a deeper exploration of our data.</p>
+<p><img src="exploratorium.jpg"></p>
 
 <pre><code>                                       The Exploratorium, San Francisco
 
 </code></pre>
-<h4 id="Basic-information">Basic information<a class="anchor-link" href="#Basic-information">&#182;</a></h4><p>Until now, we've been biking along a pretty straight path. Now is we take some detours to explore and find which street we'd like to take next with our data! We want to arrive at a meaningful destination, so we try to gain as much as possible from our data before pedaling more. Let us explore basic information about our data.</p>
-<p><code>dataframe.describe()</code> tells us some basic stats on our dataset. We drop most categorical numbers for this. We add boolean numbers or numerical indexes for categorical variables to study their ratios.</p>
-<h4 id="The-bikeshare-dataset">The bikeshare dataset<a class="anchor-link" href="#The-bikeshare-dataset">&#182;</a></h4>
+<h4 id="Basic-information:-the-bikeshare-dataset">Basic information: the bikeshare dataset<a class="anchor-link" href="#Basic-information:-the-bikeshare-dataset">&#182;</a></h4><p><code>dataframe.describe()</code> tells us some basic stats on our dataset. We drop most categorical numbers for this. We add boolean numbers or numerical indexes for categorical variables to study their ratios.</p>
+
 </div>
 </div>
 </div>
@@ -13152,7 +13166,7 @@ Median trip duration: 9.03333333333 minutes
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we can see, there is a clear demand for bikes during the day on the weekends, and during peak commuting hours during the workweek. What if we also add weather into the picture? Then what can we say about how our data is affected?</p>
+<p>As we can see, there is a clear demand for bikes during the day on the weekends, and during peak commuting hours during the workweek. This shows us that we should definitely separate our timeseries data into weekdays and weekends if we are aggregating data per day.</p>
 <h4 id="Weather-data">Weather data<a class="anchor-link" href="#Weather-data">&#182;</a></h4><p>Let's take a look at weather trends. With our original weather dataset, we will visualize the frequency of safe, mediocre, and dangerous weather in a pie chart. This will help us begin to explore our data.</p>
 
 </div>
